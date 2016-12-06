@@ -68,6 +68,16 @@
       );
       scene.add( brick );
 
+      var marbleGeometry = new THREE.SphereGeometry( 2, 32, 32 );
+      var marbleMaterial = new THREE.MeshBasicMaterial()
+      // var marbleMaterial = new THREE.MeshPhongMaterial( {
+      //   color: 0x996633,
+      //   specular: 0x050505,
+      //   shininess: 100
+      // } )
+      var marble = new THREE.Mesh( marbleGeometry, marbleMaterial );
+      scene.add( marble );
+
       scene.fog = new THREE.Fog(0x000, 0, 50)
 
       // Moving camera position slightly to enable view of box object ( scene.add() adds to 0,0,0 coordinates by default )
@@ -75,6 +85,8 @@
       box.position.z = -1;
       brick.position.x = 7
       brick.position.z = -6
+      marble.position.x = -6
+      marble.position.z = -6
 
       const moveObjectAway = function(object){
         if ((object.position.z < 0) && (object.position.z > -50)) {
