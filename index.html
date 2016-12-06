@@ -24,14 +24,21 @@
       var cube = new THREE.Mesh( geometry, material );
       scene.add( cube );
 
+      // Moving camera position slightly to enable view of cube object ( scene.add() adds to 0,0,0 coordinates by default )
+
       camera.position.z = 5;
+
+      // Adding below to rotate object (cube)
+
+      cube.rotation.x += 0.1;
+      cube.rotation.y += 0.1;
 
       function render() {
       	requestAnimationFrame( render );
       	renderer.render( scene, camera );
       }
       render();
-      
+
 		</script>
 	</body>
 </html>
