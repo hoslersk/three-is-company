@@ -19,35 +19,62 @@
       renderer.setSize( window.innerWidth, window.innerHeight );
       document.body.appendChild( renderer.domElement );
 
-      var geometry = new THREE.BoxGeometry( 8, 12, 4 );
-      var material = new THREE.MeshBasicMaterial( { color: 0x976D88 } );
       var cardboardTexture = new THREE.TextureLoader().load( "textures/Cardboard.jpg" );
+      // cardboardTexture.minFilter = THREE.LinearFilter
+      var disCardboardTexture = new THREE.TextureLoader().load( "textures/distressed-cardboard.jpg" );
+      var material = new THREE.MeshBasicMaterial( { color: 0x976D88 } );
       material.map = cardboardTexture
-      var cube = new THREE.Mesh( geometry, material );
-      scene.add( cube );
 
-      // var center = new THREE.Vector3(1, 1, 1);
-      // var radius = 4.0
-      // var sphere = new THREE.Sphere( center, radius )
-      // // sphere.position.x = 5
-      // scene.add(sphere);
 
-      // renderer.setClearColor(new THREE.Color(0x88976D, 0));
+      // var materials = [
+      //    new THREE.MeshLambertMaterial({
+      //        map: cardboardTexture
+      //    }),
+      //    new THREE.MeshLambertMaterial({
+      //        map: cardboardTexture
+      //    }),
+      //    new THREE.MeshLambertMaterial({
+      //        map: cardboardTexture
+      //    }),
+      //    new THREE.MeshLambertMaterial({
+      //        map: cardboardTexture
+      //    }),
+      //    new THREE.MeshLambertMaterial({
+      //        map: cardboardTexture
+      //    }),
+      //    new THREE.MeshLambertMaterial({
+      //        map: cardboardTexture
+      //    })
+      // ];
 
-      // scene.fog = new THREE.Fog(0xffffff, 0.015, 100)
+      var boxGeometry = new THREE.BoxGeometry( 8, 12, 4, 1, 1, 1 );
+
+      // var box = new THREE.Mesh( geometry, material );
+      var box = new THREE.Mesh(
+        boxGeometry,
+        // new THREE.MeshFaceMaterial(materials)
+        material
+      );
+
+      scene.add( box );
+
+      var brickTexture = new THREE.TextureLoader().load( "textures/brick.jpg" );
+      var brickGeometry = new THREE.BoxGeometry(2, 4, 1, 1, 1, 1);
+      var brickMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+      brickMaterial.map = brickTexture;
+      var brick = new THREE.Mesh(
+        brickGeometry,
+        brickMaterial
+      );
+      scene.add( brick );
+
       scene.fog = new THREE.Fog(0x000, 0, 50)
 
-      // var ambientLight = new THREE.AmbientLight(0x0c0c0c);
-      // scene.add(ambientLight);
-      //
-      // var spotLight = new THREE.SpotLight(0xffffff);
-      // spotLight.position.set(-40, 60, -10);
-      // spotLight.castShadow = true;
-      // scene.add(spotLight);
-
-      // Moving camera position slightly to enable view of cube object ( scene.add() adds to 0,0,0 coordinates by default )
+      // Moving camera position slightly to enable view of box object ( scene.add() adds to 0,0,0 coordinates by default )
       camera.position.z = 5;
-      cube.position.z = -1;
+      box.position.z = -1;
+      brick.position.x = 7
+      brick.position.z = -6
 
       const moveObjectAway = function(object){
         if ((object.position.z < 0) && (object.position.z > -50)) {
@@ -68,11 +95,13 @@
       function render() {
       	requestAnimationFrame( render );
 
-        // Adding below to rotate object (cube)
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
+        // Adding below to rotate object (box)
+        box.rotation.x -= 0.008;
+        box.rotation.y += 0.005;
+        brick.rotation.x -= 0.001;
+        brick.rotation.y += 0.003;
 
-        moveObjectAway(cube)
+        moveObjectAway(box)
 
       	renderer.render( scene, camera );
       }
