@@ -19,8 +19,10 @@
       renderer.setSize( window.innerWidth, window.innerHeight );
       document.body.appendChild( renderer.domElement );
 
-      var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-      var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+      var geometry = new THREE.BoxGeometry( 8, 12, 4 );
+      var material = new THREE.MeshBasicMaterial( { color: 0x976D88 } );
+      var cardboardTexture = new THREE.TextureLoader().load( "textures/Cardboard.jpg" );
+      material.map = cardboardTexture
       var cube = new THREE.Mesh( geometry, material );
       scene.add( cube );
 
@@ -30,16 +32,25 @@
       // // sphere.position.x = 5
       // scene.add(sphere);
 
-      var color = "#d3d3d3"
-      var fog = new THREE.Fog( color )
-      // scene.add(fog)
+      // renderer.setClearColor(new THREE.Color(0x88976D, 0));
+
+      // scene.fog = new THREE.Fog(0xffffff, 0.015, 100)
+      scene.fog = new THREE.Fog(0x000, 0, 50)
+
+      // var ambientLight = new THREE.AmbientLight(0x0c0c0c);
+      // scene.add(ambientLight);
+      //
+      // var spotLight = new THREE.SpotLight(0xffffff);
+      // spotLight.position.set(-40, 60, -10);
+      // spotLight.castShadow = true;
+      // scene.add(spotLight);
 
       // Moving camera position slightly to enable view of cube object ( scene.add() adds to 0,0,0 coordinates by default )
       camera.position.z = 5;
       cube.position.z = -1;
 
       const moveObjectAway = function(object){
-        if ((object.position.z < 0) && (object.position.z > -20)) {
+        if ((object.position.z < 0) && (object.position.z > -50)) {
           object.position.z -= 0.1;
         } else {
           moveObjectBack(object);
@@ -48,7 +59,7 @@
 
       const moveObjectBack = function(object){
         if (object.position.z < -1) {
-          object.position.z += 0.1;
+          object.position.z += 50;
         } else {
           moveObjectAway(object);
         }
