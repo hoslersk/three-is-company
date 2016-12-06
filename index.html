@@ -24,16 +24,44 @@
       var cube = new THREE.Mesh( geometry, material );
       scene.add( cube );
 
-      // Moving camera position slightly to enable view of cube object ( scene.add() adds to 0,0,0 coordinates by default )
+      // var center = new THREE.Vector3(1, 1, 1);
+      // var radius = 4.0
+      // var sphere = new THREE.Sphere( center, radius )
+      // // sphere.position.x = 5
+      // scene.add(sphere);
 
+      var color = "#d3d3d3"
+      var fog = new THREE.Fog( color )
+      // scene.add(fog)
+
+      // Moving camera position slightly to enable view of cube object ( scene.add() adds to 0,0,0 coordinates by default )
       camera.position.z = 5;
+      cube.position.z = -1;
+
+      const moveObjectAway = function(object){
+        if ((object.position.z < 0) && (object.position.z > -20)) {
+          object.position.z -= 0.1;
+        } else {
+          moveObjectBack(object);
+        }
+      }
+
+      const moveObjectBack = function(object){
+        if (object.position.z < -1) {
+          object.position.z += 0.1;
+        } else {
+          moveObjectAway(object);
+        }
+      }
 
       function render() {
       	requestAnimationFrame( render );
-        
+
         // Adding below to rotate object (cube)
-        cube.rotation.x += 0.1;
-        cube.rotation.y += 0.1;
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        moveObjectAway(cube)
 
       	renderer.render( scene, camera );
       }
